@@ -15,10 +15,14 @@ from app.services.intel_agent import find_existing_event, find_firms_matches, ca
 
 logger = logging.getLogger("sentinel.pipeline.classify")
 
-CLASSIFY_PROMPT = """You are a Nigerian security intelligence analyst. Classify each tweet with structured fields.
+CLASSIFY_PROMPT = """You are a Nigerian security intelligence analyst. Classify each tweet about NIGERIAN security.
+
+IMPORTANT: If a tweet is NOT about a security event inside Nigeria (e.g. it's about Gaza, Iran, Sudan, Ukraine, or any other country), set is_nigeria to false and skip classification fields.
 
 For each tweet, extract:
-- state: Nigerian state name (e.g. "Borno", "Plateau"). Use "Unknown" if unclear. If about multiple states, use the primary one.
+- tweet_id: the tweet ID
+- is_nigeria: true if this tweet is about a security incident/situation INSIDE NIGERIA, false otherwise
+- state: Nigerian state name (e.g. "Borno", "Plateau"). MUST be one of Nigeria's 36 states or "FCT". If the tweet mentions Nigeria generally without a specific state, use the most likely state based on context. If truly impossible to determine, use "Unknown".
 - lga: Local Government Area if mentioned, else null
 - incident_type: one of [attack, kidnapping, protest, military_operation, ied, airstrike, communal_violence, threat, displacement, arrest, armed_robbery, other]
 - severity: one of [critical, high, moderate, low]
@@ -37,8 +41,10 @@ For each tweet, extract:
 - summary: one sentence factual summary
 - location_name: specific location if mentioned, else null
 
-Group tweets about the SAME incident by giving them the same "event_group" integer (starting at 1).
-Different incidents get different event_group numbers.
+For tweets where is_nigeria is false, still include the tweet_id and is_nigeria field but leave other fields null.
+
+Group tweets about the SAME Nigerian incident by giving them the same "event_group" integer (starting at 1).
+Different incidents get different event_group numbers. Non-Nigeria tweets get event_group 0.
 
 Respond with valid JSON: {{"classifications": [...]}}
 
@@ -80,11 +86,26 @@ async def classify_batch(tweets: list[dict], api_key: str, model: str) -> list[d
         return []
 
 
-async def apply_classifications(db: AsyncSession, classifications: list[dict]) -> None:
-    """Write classification fields back to TwitterPost records."""
+async def apply_classifications(db: AsyncSession, classifications: list[dict]) -> int:
+    """Write classification fields back to TwitterPost records. Returns count of Nigeria-relevant tweets."""
+    nigeria_count = 0
     for c in classifications:
         tweet_id = c.get("tweet_id")
         if not tweet_id:
+            continue
+
+        is_nigeria = c.get("is_nigeria", True)
+
+        if not is_nigeria:
+            # Mark as filtered out — not about Nigeria
+            await db.execute(
+                update(TwitterPost).where(TwitterPost.tweet_id == str(tweet_id)).values(
+                    pipeline_status="filtered_out",
+                    pipeline_filter_method="classify_reject",
+                    ai_classified_at=datetime.utcnow(),
+                    ai_processed_at=datetime.utcnow(),
+                )
+            )
             continue
 
         actors = c.get("actors", [])
@@ -107,6 +128,9 @@ async def apply_classifications(db: AsyncSession, classifications: list[dict]) -
                 ai_classified_at=datetime.utcnow(),
             )
         )
+        nigeria_count += 1
+
+    return nigeria_count
 
 
 async def create_events_from_groups(
@@ -115,7 +139,12 @@ async def create_events_from_groups(
     """Group classified tweets into events and create/update Event records."""
     groups: dict[int, list[dict]] = {}
     for c in classifications:
+        # Skip non-Nigeria and unclassifiable tweets
+        if not c.get("is_nigeria", True):
+            continue
         g = c.get("event_group", 0)
+        if g == 0:
+            continue  # event_group 0 = not a real event
         if g not in groups:
             groups[g] = []
         groups[g].append(c)
@@ -125,6 +154,15 @@ async def create_events_from_groups(
 
     for group_items in groups.values():
         rep = group_items[0]
+
+        # Skip events with Unknown state or "other" type — not actionable
+        state = rep.get("state", "Unknown")
+        incident_type = rep.get("incident_type", "other")
+        if state in ("Unknown", "unknown", None, ""):
+            continue
+        if incident_type == "other":
+            continue
+
         tweet_ids = [str(c.get("tweet_id", "")) for c in group_items if c.get("tweet_id")]
 
         if not tweet_ids:

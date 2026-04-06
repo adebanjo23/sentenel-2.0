@@ -62,11 +62,36 @@ class Settings(BaseSettings):
     pipeline_model_full: str = "gpt-4.1"
     pipeline_filter_batch_size: int = 50
     pipeline_classify_batch_size: int = 25
-    pipeline_max_tweets_per_run: int = 500
+    pipeline_max_tweets_per_run: int = 5000
     pipeline_aggregate_window_hours: int = 72
     pipeline_baseline_window_days: int = 30
     pipeline_threat_escalation_threshold: float = 2.0
     pipeline_min_incidents_for_assessment: int = 3
+
+    # Scheduler
+    scheduler_enabled: bool = True
+    scheduler_interval_hours: int = 8
+    scheduler_tweets_per_account: int = 20
+
+    # AWS
+    aws_access_key_id: str = Field(default="", alias="AWS_ACCESS_KEY_ID")
+    aws_secret_access_key: str = Field(default="", alias="AWS_SECRET_ACCESS_KEY")
+    aws_region: str = Field(default="us-east-1", alias="AWS_REGION")
+
+    # CloudWatch
+    cloudwatch_log_group: str = Field(default="/sentinel/api", alias="CLOUDWATCH_LOG_GROUP")
+    cloudwatch_retention_days: int = Field(default=30, alias="CLOUDWATCH_RETENTION_DAYS")
+    cloudwatch_environment: str = Field(default="development", alias="CLOUDWATCH_ENVIRONMENT")
+
+    # CORS
+    cors_origins_str: str = Field(
+        default="http://localhost:3000",
+        alias="CORS_ORIGINS",
+    )
+
+    @property
+    def cors_origins(self) -> list[str]:
+        return [o.strip() for o in self.cors_origins_str.split(",") if o.strip()]
 
 
 _settings = None

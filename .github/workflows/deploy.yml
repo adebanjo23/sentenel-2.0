@@ -1,0 +1,113 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Fetch secrets from AWS Secrets Manager
+      id: secrets
+      run: |
+        SECRET_JSON=$(aws secretsmanager get-secret-value \
+          --secret-id ${{ secrets.AWS_SECRET_NAME }} \
+          --query SecretString \
+          --output text)
+
+        echo "$SECRET_JSON" | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' >> $GITHUB_ENV
+
+        echo "$SECRET_JSON" > secrets.json
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+
+    - name: Add EC2 to known hosts
+      run: |
+        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Deploy to EC2
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+      run: |
+        # Ensure deployment and data directories exist
+        ssh $EC2_USER@$EC2_HOST "mkdir -p ~/sentinel-api/data/twitter/cookies"
+
+        # Sync application code (excluding data, env, dev files)
+        rsync -avz --delete \
+          --exclude '.git' \
+          --exclude '__pycache__' \
+          --exclude '*.pyc' \
+          --exclude '.pytest_cache' \
+          --exclude 'venv' \
+          --exclude '.venv' \
+          --exclude '.env' \
+          --exclude 'secrets.json' \
+          --exclude 'data/' \
+          --exclude 'node_modules' \
+          --exclude '.next' \
+          --exclude '.claude' \
+          --exclude '.idea' \
+          --exclude 'login_twitter.py' \
+          ./ $EC2_USER@$EC2_HOST:~/sentinel-api/
+
+        # Copy secrets file
+        scp secrets.json $EC2_USER@$EC2_HOST:~/sentinel-api/secrets.json
+
+        # Deploy and restart services
+        ssh $EC2_USER@$EC2_HOST << 'ENDSSH'
+          cd ~/sentinel-api
+
+          # Convert secrets.json to .env file
+          jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' secrets.json > .env
+          echo "✅ Environment variables loaded from AWS Secrets Manager"
+
+          # Clean up secrets file
+          rm -f secrets.json
+
+          # Build and restart
+          docker-compose -f docker-compose.prod.yml up -d --build
+
+          # Show service status
+          docker-compose -f docker-compose.prod.yml ps
+        ENDSSH
+
+        # Clean up local secrets file
+        rm -f secrets.json
+
+    - name: Health Check
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+      run: |
+        echo "⏳ Waiting for services to start..."
+        sleep 45
+
+        HEALTH_URL="http://${EC2_HOST}:8001/api/health"
+        echo "🔍 Checking health at: $HEALTH_URL"
+
+        if curl -f -s "$HEALTH_URL"; then
+          echo ""
+          echo "✅ Deployment successful!"
+          echo "🌐 API: http://${EC2_HOST}:8001"
+          echo "📚 Docs: http://${EC2_HOST}:8001/docs"
+        else
+          echo ""
+          echo "❌ Health check failed!"
+          exit 1
+        fi

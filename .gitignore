@@ -1,11 +1,34 @@
+# Python
 __pycache__/
 *.pyc
 *.egg-info/
-.env
-data/*.db
-data/videos/
-data/logs/
-data/twitter/
 .pytest_cache/
 .venv/
 venv/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+secrets.json
+
+# Data (persistent, not in repo)
+data/*.db
+data/videos/
+data/logs/
+data/twitter/cookies/
+data/twitter/debug_graphql_response.json
+data/twitter/*.png
+
+# Docker
+docker-compose.override.yml
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

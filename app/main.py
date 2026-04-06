@@ -2,15 +2,17 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
 from app.database import init_db
 from app.routes import health, acled, firms, tiktok, twitter, monitor, events, pipeline, threats, alerts
+from app.routes import scheduler as scheduler_route
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Configure logging so background task output shows in terminal
+    # Configure logging — CloudWatch in production, console in development
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
@@ -18,11 +20,36 @@ async def lifespan(app: FastAPI):
     )
 
     settings = get_settings()
+
+    # Initialize CloudWatch logger (sends to AWS in production, console in development)
+    from app.utils.cloudwatch_logger import CloudWatchLogger
+    cw_logger = CloudWatchLogger().get_logger()
+    cw_logger.info(f"SENTINEL 2.0 starting — environment: {settings.cloudwatch_environment}")
+
     await init_db(settings.database_url)
+
+    # Auto-start scheduler if enabled
+    if settings.scheduler_enabled:
+        from app.services.scheduler import scheduler
+        scheduler.start(settings)
+
     yield
+
+    # Shutdown — stop scheduler
+    from app.services.scheduler import scheduler
+    if scheduler.running:
+        scheduler.stop()
 
 
 app = FastAPI(title="SENTINEL 2.0", version="2.0.0", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=get_settings().cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Data collection
 app.include_router(health.router, prefix="/api", tags=["health"])
@@ -39,3 +66,6 @@ app.include_router(events.router, prefix="/api/events", tags=["events"])
 app.include_router(pipeline.router, prefix="/api/pipeline", tags=["pipeline"])
 app.include_router(threats.router, prefix="/api/threats", tags=["threats"])
 app.include_router(alerts.router, prefix="/api/alerts", tags=["alerts"])
+
+# Scheduler
+app.include_router(scheduler_route.router, prefix="/api/scheduler", tags=["scheduler"])

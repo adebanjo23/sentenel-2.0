@@ -12,7 +12,7 @@ from app.models import TwitterPost
 
 logger = logging.getLogger("sentinel.pipeline.filter")
 
-INCLUDE_KEYWORDS = [
+SECURITY_KEYWORDS = [
     "attack", "killed", "kidnap", "abduct", "bandit", "terrorist",
     "boko haram", "iswap", "insurgent", "military operation", "airstrike",
     "gunmen", "armed men", "ambush", "explosion", "bomb", "ied",
@@ -29,6 +29,24 @@ INCLUDE_KEYWORDS = [
     "yaki", "gwagwarwa", "soja", "mutuwa",
 ]
 
+# Nigeria-specific terms — if these appear WITH security keywords, auto-include
+NIGERIA_CONTEXT = [
+    "nigeria", "nigerian",
+    # States
+    "abia", "adamawa", "akwa ibom", "anambra", "bauchi", "bayelsa", "benue",
+    "borno", "cross river", "delta", "ebonyi", "edo", "ekiti", "enugu",
+    "gombe", "imo", "jigawa", "kaduna", "kano", "katsina", "kebbi",
+    "kogi", "kwara", "lagos", "nasarawa", "niger state", "ogun", "ondo",
+    "osun", "oyo", "plateau", "rivers", "sokoto", "taraba", "yobe", "zamfara",
+    "fct", "abuja", "maiduguri", "jos", "katsina",
+    # Nigeria-specific actors and terms
+    "boko haram", "iswap", "ipob", "ess-n", "nurtw",
+    "nigerian army", "nigerian police", "nigerian airforce", "nscdc",
+    "dhq", "hqnigerian", "operation hadin kai", "operation whirl stroke",
+    "operation fansan", "operation enduring peace", "cjtf",
+    "lga", "senatorial", "naira",
+]
+
 EXCLUDE_KEYWORDS = [
     "premier league", "champions league", "la liga", "serie a",
     "nba ", "nfl ", "world cup", "olympics",
@@ -37,54 +55,85 @@ EXCLUDE_KEYWORDS = [
     "giveaway", "promo code",
 ]
 
-# Nigerian states — tweets mentioning these + a security keyword are likely relevant
-NIGERIAN_STATES = [
-    "abia", "adamawa", "akwa ibom", "anambra", "bauchi", "bayelsa", "benue",
-    "borno", "cross river", "delta", "ebonyi", "edo", "ekiti", "enugu",
-    "gombe", "imo", "jigawa", "kaduna", "kano", "katsina", "kebbi",
-    "kogi", "kwara", "lagos", "nasarawa", "niger", "ogun", "ondo",
-    "osun", "oyo", "plateau", "rivers", "sokoto", "taraba", "yobe", "zamfara",
-    "fct", "abuja",
+# International terms — if these appear WITHOUT Nigeria context, likely not about Nigeria
+INTERNATIONAL_SIGNALS = [
+    "gaza", "israel", "palestine", "hamas", "hezbollah",
+    "iran", "tehran", "irgc", "hormuz",
+    "ukraine", "russia", "kremlin",
+    "sudan", "darfur", "rsf",
+    "syria", "assad",
+    "cameroon", "chad republic",
+    "lebanon", "beirut",
+    "pakistan", "kabul", "taliban",
+    "yemen", "houthi",
+    "somalia", "al-shabaab",
 ]
 
 
 def keyword_check(content: str) -> str | None:
-    """Fast keyword-based pre-filter. Returns 'include', 'exclude', or None (borderline)."""
+    """
+    Fast keyword-based pre-filter.
+    Returns:
+      'include'  — has security keyword + Nigerian context → definitely relevant
+      'exclude'  — matches exclude list or is clearly international
+      None       — borderline, needs AI to decide
+    """
     if not content:
         return "exclude"
 
     lower = content.lower()
 
+    # Check explicit exclude keywords
     for kw in EXCLUDE_KEYWORDS:
         if kw in lower:
-            # Could still be relevant if it also has security keywords
-            has_security = any(sk in lower for sk in INCLUDE_KEYWORDS[:20])
-            if not has_security:
-                return "exclude"
+            return "exclude"
 
-    for kw in INCLUDE_KEYWORDS:
-        if kw in lower:
-            return "include"
+    has_security = any(kw in lower for kw in SECURITY_KEYWORDS)
+    has_nigeria = any(ctx in lower for ctx in NIGERIA_CONTEXT)
+    has_international = any(sig in lower for sig in INTERNATIONAL_SIGNALS)
 
-    # Check for state name + any vaguely security-related term
-    has_state = any(s in lower for s in NIGERIAN_STATES)
-    if has_state:
-        weak_signals = ["dead", "fire", "burn", "flee", "rescue", "danger", "alarm", "warning"]
-        if any(w in lower for w in weak_signals):
-            return "include"
+    # Security keyword + Nigerian context = auto-include
+    if has_security and has_nigeria and not has_international:
+        return "include"
 
-    return None  # borderline
+    # International content with no Nigerian context = auto-exclude
+    if has_international and not has_nigeria:
+        return "exclude"
+
+    # Security keyword but no Nigerian context = borderline (send to AI)
+    if has_security and not has_nigeria:
+        return None
+
+    # Nigerian context but no security keyword = borderline
+    if has_nigeria and not has_security:
+        return None
+
+    # Nothing relevant at all
+    if not has_security and not has_nigeria:
+        return "exclude"
+
+    # Both international AND Nigerian context (e.g. "Nigerians killed in Ukraine") = borderline
+    return None
 
 
 FILTER_PROMPT = """You are a filter for a Nigerian security intelligence system.
-For each tweet, respond with ONLY "Y" (security-relevant to Nigeria) or "N" (noise).
+For each tweet, determine if it is about a SECURITY INCIDENT OR SECURITY SITUATION INSIDE NIGERIA.
 
-Security-relevant: reports of attacks, kidnappings, military operations, armed conflict,
-communal violence, displacement, protests/unrest, arrests of militants, arms trafficking,
-credible threats, security warnings — all within Nigeria or its border regions.
+Respond "Y" ONLY if the tweet is about something happening IN NIGERIA related to:
+- Armed attacks, killings, kidnappings, bombings in Nigeria
+- Nigerian military/police operations within Nigeria
+- Arrests of criminals, terrorists, bandits in Nigeria
+- Security warnings or threats within Nigerian states
+- Communal violence, farmer-herder clashes in Nigeria
+- Displacement of people within Nigeria
+- Arms trafficking within Nigeria
 
-NOT relevant: international news not about Nigeria, Nigerian politics without security angle,
-sports, entertainment, personal opinions without incident info, business/economy news.
+Respond "N" if:
+- The tweet is about events in OTHER COUNTRIES (Gaza, Iran, Israel, Sudan, Ukraine, Lebanon, etc.)
+- Even if it mentions "killed" or "attack" — if it's not about Nigeria, mark N
+- Nigerian politics, economy, sports, entertainment without security relevance
+- General commentary or opinions without reporting a specific Nigerian security incident
+- Events about Nigerians abroad (e.g. Nigerians in Ukraine, Nigerians in Libya) UNLESS it's about a security threat to Nigeria itself
 
 Tweets:
 {tweets}
