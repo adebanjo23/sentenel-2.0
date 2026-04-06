@@ -50,6 +50,10 @@ async def init_db(database_url: str = "sqlite+aiosqlite:///./data/sentinel.db"):
         import os
         os.makedirs("data", exist_ok=True)
 
+    # Auto-fix PostgreSQL URLs missing +asyncpg
+    if database_url.startswith("postgresql://"):
+        database_url = database_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+
     engine = _create_engine(database_url)
     AsyncSessionLocal = async_sessionmaker(
         engine,
