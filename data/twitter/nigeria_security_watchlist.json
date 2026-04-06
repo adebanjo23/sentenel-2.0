@@ -1,0 +1,620 @@
+{
+  "watchlist_name": "Nigeria Security First Responder Accounts",
+  "description": "Comprehensive watchlist of Twitter/X accounts that are first responders for Nigerian security events — attacks, kidnappings, military operations, and security incidents.",
+  "last_updated": "2026-03-25",
+  "total_accounts": 68,
+  "categories": [
+    {
+      "category": "NIGERIAN DEFENSE/MILITARY REPORTERS & ANALYSTS",
+      "description": "Journalists and analysts who specifically cover the Nigerian military, insurgency, and banditry",
+      "accounts": [
+        {
+          "handle": "@ZagazOlaMakama",
+          "name": "Zagazola Makama",
+          "description": "Counter-insurgency expert and security analyst specializing in the Lake Chad Basin. Runs zagazola.org.",
+          "importance": "THE primary first-responder account for northeast security. Breaks news on ISWAP/Boko Haram attacks, military operations, troop movements, and CJTF activities before anyone else. Has deep military and intelligence sources in Theatre Command.",
+          "region_coverage": ["Borno", "Yobe", "Adamawa", "Lake Chad Basin"],
+          "topics": ["ISWAP", "Boko Haram", "Military operations", "CJTF", "Counter-insurgency"]
+        },
+        {
+          "handle": "@A_Salkida",
+          "name": "Ahmad Salkida",
+          "description": "Conflict and terrorism reporter. Co-founder of HumAngle Media. Has reported on Boko Haram since its earliest days. Self-exiled in 2013 due to threats.",
+          "importance": "One of the most knowledgeable reporters on Boko Haram/ISWAP globally. Has had direct access to insurgent groups. Breaks major stories on kidnappings, hostage negotiations, and insurgent strategy. Won grants from CPJ, RSF, Rory Peck Trust.",
+          "region_coverage": ["Northeast Nigeria", "Lake Chad Basin"],
+          "topics": ["Boko Haram", "ISWAP", "Kidnappings", "Hostage negotiations", "Insurgent strategy"]
+        },
+        {
+          "handle": "@DefenseNigeria",
+          "name": "Defense News Nigeria",
+          "description": "Private defense analysis account (not affiliated with Armed Forces of Nigeria). 101K+ followers. Runs defensenigeria.wordpress.com.",
+          "importance": "Detailed military analysis including equipment acquisitions, air operations, counter-insurgency assessments. Publishes long analytical threads on military operations. Started after watching VICE documentary on IS in Lake Chad.",
+          "region_coverage": ["Nationwide", "Northeast", "Northwest"],
+          "topics": ["Military equipment", "Air operations", "Defense procurement", "Counter-insurgency analysis"]
+        },
+        {
+          "handle": "@fulannasrullah",
+          "name": "Fulan Nasrullah",
+          "description": "National security policy advisor. Founder of the Conflict Studies and Analysis Project at the Global Initiative for Civil Stabilisation (GICS).",
+          "importance": "One of Nigeria's most respected Boko Haram watchers. Provides deep analysis of insurgent propaganda, leadership transitions, and factional splits within BH/ISWAP. Frequently cited by Reuters, BBC, and international media.",
+          "region_coverage": ["Northeast Nigeria", "Lake Chad Basin"],
+          "topics": ["Boko Haram", "ISWAP", "Insurgent leadership", "Strategic analysis", "National security architecture"]
+        },
+        {
+          "handle": "@militaryafrica",
+          "name": "Military Africa",
+          "description": "Defence news, aerospace, military, technology, and security news across Africa. Website: military.africa",
+          "importance": "Covers Nigerian military operations in broader African defense context. Tracks equipment, deployments, and regional military developments relevant to Nigeria.",
+          "region_coverage": ["Pan-African", "Nigeria"],
+          "topics": ["Military equipment", "Defense technology", "Regional security", "Military operations"]
+        },
+        {
+          "handle": "@Abdulfagge",
+          "name": "Abdulaziz Abdulaziz",
+          "description": "Deputy General Editor of Daily Trust. Won Wole Soyinka Award for Investigative Reporting. Created Trust TV's landmark banditry documentary.",
+          "importance": "Personally traversed bandit-controlled areas in the Northwest to produce the documentary 'Nigeria's Banditry: The Inside Story.' Has direct interviews with bandit leaders including Turji. Essential for Northwest banditry coverage.",
+          "region_coverage": ["Northwest Nigeria", "Zamfara", "Katsina", "Kaduna", "Sokoto"],
+          "topics": ["Banditry", "Northwest insecurity", "Investigative journalism", "Bandit leaders"]
+        }
+      ]
+    },
+    {
+      "category": "NIGERIAN SECURITY-FOCUSED ACCOUNTS",
+      "description": "Accounts that track ISWAP, Boko Haram, bandits, kidnappings in real time",
+      "accounts": [
+        {
+          "handle": "@eonsintelligenc",
+          "name": "Eons Intelligence",
+          "description": "Risk consulting and intelligence gathering organization based in Lagos/UK. 51K+ followers. Website: eonsintelligence.com",
+          "importance": "24/7 intelligence gathering and reportage. Tracks security incidents across Nigeria in real time. Provides bespoke intelligence reports on threats, risks, and security developments.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Real-time security tracking", "Risk assessment", "Intelligence gathering", "Kidnappings", "Armed attacks"]
+        },
+        {
+          "handle": "@sbmintelligence",
+          "name": "SBM Intelligence",
+          "description": "Lagos-based geopolitical intelligence and risk consulting firm. Nigeria's leading geopolitical research firm since 2013.",
+          "importance": "Publishes regular security situation reports, data-driven analysis of violence trends, kidnapping statistics, and political risk assessments. Their reports are cited by major international media and policy organizations.",
+          "region_coverage": ["Nationwide", "West Africa"],
+          "topics": ["Security data analytics", "Political risk", "Kidnapping trends", "Violence mapping", "Geopolitical analysis"]
+        },
+        {
+          "handle": "@prnigeria",
+          "name": "PRNigeria",
+          "description": "Pioneer press release distribution agency in Nigeria. Specializes in syndicating official releases from military, security, intelligence, and response agencies.",
+          "importance": "THE channel for official military and security press releases in Nigeria. Often first to publish DHQ operational updates, military operation results, and official casualty figures. Has deep relationships with military spokespersons.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Official military releases", "Security operations", "Intelligence agency updates", "Crisis communications"]
+        }
+      ]
+    },
+    {
+      "category": "NIGERIAN NEWS ORGANIZATIONS (FAST SECURITY REPORTING)",
+      "description": "News organizations known for fast, reliable security news breaking",
+      "accounts": [
+        {
+          "handle": "@HumAngle_",
+          "name": "HumAngle Media",
+          "description": "Founded March 2020 by Ahmad Salkida and Obiora Chukwumba. Specializes in conflict, humanitarian, and development reporting across Africa. Won Sigma Award for satellite data investigation of Nigeria's mass graves.",
+          "importance": "The most focused conflict/security news outlet in Nigeria. Produces breaking news, in-depth investigations, and data-driven reporting on insecurity. Three weekly podcasts on conflict. Finalists for Livingston Award. Essential for northeast/northwest coverage.",
+          "region_coverage": ["Northeast", "Northwest", "Middle Belt", "Pan-African"],
+          "topics": ["Insurgency", "Banditry", "Humanitarian crises", "IDPs", "Conflict data"]
+        },
+        {
+          "handle": "@daily_trust",
+          "name": "Daily Trust",
+          "description": "Nigeria's largest-circulation newspaper in the north. Published by Media Trust. Has bureaus across northern Nigeria including Maiduguri.",
+          "importance": "Largest readership in northern Nigeria. Their Maiduguri bureau and northern correspondents break northeast and northwest security news fast. Trust TV produces security documentaries. Strong northern security reporting network.",
+          "region_coverage": ["Northern Nigeria", "Northeast", "Northwest", "Middle Belt"],
+          "topics": ["Insurgency", "Banditry", "Kidnappings", "Military operations", "Northern politics"]
+        },
+        {
+          "handle": "@PremiumTimesng",
+          "name": "Premium Times Nigeria",
+          "description": "Nigeria's leading investigative newspaper. Strong defense desk in Abuja covering military/security beat.",
+          "importance": "Ground-breaking investigative journalism on security issues. Defense correspondents attend DHQ briefings. Breaks stories on military operations, security force abuses, and defense policy.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Investigative security reporting", "Defense policy", "Military operations", "Security force accountability"]
+        },
+        {
+          "handle": "@SaharaReporters",
+          "name": "Sahara Reporters",
+          "description": "New York-based Nigerian online news outlet founded 2006. Citizen journalism model. Known for aggressive, anti-establishment reporting.",
+          "importance": "Extremely fast at breaking security news, especially kidnappings, attacks, and security force failures. Citizen journalism network means they get reports from conflict zones quickly. Not afraid to publish news others won't.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Breaking security news", "Kidnappings", "Attacks", "Security force failures", "Citizen reports"]
+        },
+        {
+          "handle": "@channelstv",
+          "name": "Channels Television",
+          "description": "Nigeria's largest independent 24-hour news channel. Named 'Best Station of the Year' 12 times. Based in Lagos.",
+          "importance": "Most-followed Nigerian news handle on Twitter. Live security coverage, breaking news alerts, and interviews with security officials. Sunrise Daily program frequently covers security topics.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Breaking news", "Security coverage", "Government response", "Military briefings"]
+        },
+        {
+          "handle": "@MobilePunch",
+          "name": "Punch Newspapers",
+          "description": "Most widely read newspaper in Nigeria. Seen as largely independent and credible.",
+          "importance": "Fast breaking news on security incidents. Large correspondent network across Nigeria. Independent editorial voice on security matters.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Breaking security news", "National security", "Kidnappings", "Attacks"]
+        },
+        {
+          "handle": "@thecableng",
+          "name": "TheCable",
+          "description": "Nigeria's independent online newspaper. Known for fact-based reporting and analysis.",
+          "importance": "Quick at breaking security news with verified facts. Strong Abuja sources for defense and security policy reporting.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Security policy", "Breaking news", "Defense analysis", "Fact-based reporting"]
+        },
+        {
+          "handle": "@GazetteNGR",
+          "name": "Peoples Gazette",
+          "description": "Investigative online newspaper founded 2020 by Samuel Ogundipe. 544K+ followers. Based in Abuja.",
+          "importance": "Aggressive investigative journalism on security and governance. First to report several major security incidents. Government blocked their website in 2021 over critical reporting. Breaks stories others won't touch.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Investigative security reporting", "Government accountability", "Military operations", "Security policy"]
+        },
+        {
+          "handle": "@DailyPostNGR",
+          "name": "Daily Post Nigeria",
+          "description": "Fast-breaking Nigerian online news outlet. 698K+ posts on X.",
+          "importance": "Extremely prolific and fast at breaking security news across all regions. High volume of security incident reports.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Breaking news", "Security incidents", "Kidnappings", "Attacks"]
+        },
+        {
+          "handle": "@daily_nigerian",
+          "name": "Daily Nigerian",
+          "description": "Abuja-based newspaper publishing in English and Hausa. 210K+ followers.",
+          "importance": "Strong northern Nigeria focus with fast security reporting. Hausa-language coverage reaches northern audience. Good sources in northern security establishment.",
+          "region_coverage": ["Northern Nigeria", "Abuja"],
+          "topics": ["Northern security", "Banditry", "Insurgency", "Government response"]
+        },
+        {
+          "handle": "@ARISEtv",
+          "name": "Arise News",
+          "description": "Nigerian global news channel. Owned by media mogul Nduka Obaigbena.",
+          "importance": "Growing security coverage with dedicated defense reporting. Live coverage of security events and government briefings.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Breaking news", "Security coverage", "Defense reporting"]
+        },
+        {
+          "handle": "@wikkitimes",
+          "name": "WikkiTimes",
+          "description": "Investigative and data journalism outlet based in Bauchi, Northeast Nigeria. First Nigerian member of Reporters Shield Network. Founded by Haruna Mohammed Salisu.",
+          "importance": "Northeast-based investigative outlet that covers terrorism funding, illegal mining (linked to banditry), and security issues in Bauchi/northeast. Publisher has been arrested and sued multiple times for reporting. Ground-level northeast coverage.",
+          "region_coverage": ["Northeast Nigeria", "Bauchi", "Borno"],
+          "topics": ["Terrorism funding", "Northeast security", "Investigative reporting", "Extractive industries"]
+        },
+        {
+          "handle": "@vanguardngr",
+          "name": "Vanguard Newspaper",
+          "description": "One of Nigeria's top newspapers. 12.7M monthly visitors. Founded 1983.",
+          "importance": "Major national outlet with consistent security reporting. Fast breaking news across all regions.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Breaking security news", "National security", "Military operations"]
+        },
+        {
+          "handle": "@GuardianNigeria",
+          "name": "The Guardian Nigeria",
+          "description": "Established Nigerian newspaper with comprehensive coverage.",
+          "importance": "Carries security analysis and opinion pieces from leading analysts. Broad correspondent network.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Security analysis", "Breaking news", "Defense policy"]
+        },
+        {
+          "handle": "@TheNationNews",
+          "name": "The Nation Newspaper",
+          "description": "Nigeria's widest circulating newspaper.",
+          "importance": "Wide circulation means extensive correspondent network for security reporting across the country.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Breaking news", "Security incidents", "National coverage"]
+        }
+      ]
+    },
+    {
+      "category": "STATE GOVERNMENT ACCOUNTS (CONFLICT-AFFECTED STATES)",
+      "description": "Official government accounts for states affected by insurgency, banditry, and farmer-herder violence",
+      "accounts": [
+        {
+          "handle": "@GovBorno",
+          "name": "Governor of Borno State (Official)",
+          "description": "Official handle for the Borno State Governor's office.",
+          "importance": "First official source for Borno State government response to attacks, IDP camp updates, and security developments in the epicenter of the insurgency.",
+          "region_coverage": ["Borno"],
+          "topics": ["State security response", "IDP management", "Reconstruction"]
+        },
+        {
+          "handle": "@GovernorZulum",
+          "name": "Prof. Babagana Umara Zulum",
+          "description": "Executive Governor of Borno State. Personal account.",
+          "importance": "Personally active and vocal about security in Borno. Known for visiting conflict-affected areas. Posts about attacks, military operations, and humanitarian response.",
+          "region_coverage": ["Borno"],
+          "topics": ["Borno security", "IDP welfare", "Reconstruction", "Security advocacy"]
+        },
+        {
+          "handle": "@BornoGovt",
+          "name": "Borno State Government",
+          "description": "Official Borno State Government updates account.",
+          "importance": "Official government communications on security incidents, humanitarian response, and development in Borno.",
+          "region_coverage": ["Borno"],
+          "topics": ["Official government updates", "Security response", "Humanitarian operations"]
+        },
+        {
+          "handle": "@yobegovernor",
+          "name": "Yobe State Governor",
+          "description": "Official account of the Governor of Yobe State (Mai Mala Buni).",
+          "importance": "Official source for Yobe State security updates. Yobe is a key ISWAP/BH operational area.",
+          "region_coverage": ["Yobe"],
+          "topics": ["Yobe security", "State government response", "Insurgency updates"]
+        },
+        {
+          "handle": "@GovernorAUF",
+          "name": "Gov. Ahmadu Umaru Fintiri (Adamawa)",
+          "description": "Executive Governor of Adamawa State.",
+          "importance": "Adamawa faces both insurgency spillover and farmer-herder violence. Official source for state-level security response.",
+          "region_coverage": ["Adamawa"],
+          "topics": ["Adamawa security", "Farmer-herder conflict", "Insurgency spillover"]
+        },
+        {
+          "handle": "@Adamawa_Gov",
+          "name": "Adamawa State Government",
+          "description": "Official Adamawa State Government account.",
+          "importance": "Official communications on security and development in Adamawa.",
+          "region_coverage": ["Adamawa"],
+          "topics": ["State government updates", "Security response"]
+        },
+        {
+          "handle": "@daudalawal_",
+          "name": "Gov. Dauda Lawal (Zamfara)",
+          "description": "Executive Governor of Zamfara State.",
+          "importance": "Zamfara is one of the worst-hit banditry states. Official source for state response to bandit attacks, kidnappings, and security operations.",
+          "region_coverage": ["Zamfara"],
+          "topics": ["Banditry", "Kidnappings", "Northwest security", "State security operations"]
+        },
+        {
+          "handle": "@dikko_radda",
+          "name": "Gov. Dikko Umaru Radda (Katsina)",
+          "description": "Executive Governor of Katsina State.",
+          "importance": "Katsina faces severe banditry. Official source for state security developments and government response.",
+          "region_coverage": ["Katsina"],
+          "topics": ["Banditry", "Kidnappings", "Northwest security"]
+        },
+        {
+          "handle": "@ubasanius",
+          "name": "Gov. Uba Sani (Kaduna)",
+          "description": "Executive Governor of Kaduna State. Also see @GovKaduna for official office account.",
+          "importance": "Kaduna is a flashpoint for banditry, kidnappings, and communal violence. Official source for state security response. Southern Kaduna has persistent farmer-herder conflict.",
+          "region_coverage": ["Kaduna"],
+          "topics": ["Banditry", "Kidnappings", "Communal violence", "Southern Kaduna conflict"]
+        },
+        {
+          "handle": "@GovKaduna",
+          "name": "Governor of Kaduna State (Official)",
+          "description": "Official handle for the Kaduna State Governor's office.",
+          "importance": "Official communications on Kaduna State security and governance.",
+          "region_coverage": ["Kaduna"],
+          "topics": ["Official security updates", "State governance"]
+        },
+        {
+          "handle": "@Ahmedaliyuskt",
+          "name": "Gov. Ahmad Aliyu (Sokoto)",
+          "description": "Executive Governor of Sokoto State.",
+          "importance": "Sokoto faces growing banditry and cross-border security threats. Official source for state response.",
+          "region_coverage": ["Sokoto"],
+          "topics": ["Banditry", "Cross-border threats", "Northwest security"]
+        },
+        {
+          "handle": "@HonBago",
+          "name": "Gov. Mohammed Umaru Bago (Niger State)",
+          "description": "Executive Governor of Niger State.",
+          "importance": "Niger State faces banditry, kidnappings, and is an emerging theater for ISWAP/Ansaru operations. Critical for monitoring jihadist expansion beyond the northeast.",
+          "region_coverage": ["Niger State"],
+          "topics": ["Banditry", "Kidnappings", "Jihadist expansion", "Mining-related violence"]
+        },
+        {
+          "handle": "@HyacinthAlia",
+          "name": "Gov. Hyacinth Alia (Benue)",
+          "description": "Executive Governor of Benue State.",
+          "importance": "Benue is the epicenter of farmer-herder violence in the Middle Belt. Official source for government response to communal attacks.",
+          "region_coverage": ["Benue"],
+          "topics": ["Farmer-herder violence", "Middle Belt conflict", "Communal attacks"]
+        },
+        {
+          "handle": "@benuestategovt",
+          "name": "Benue State Government",
+          "description": "Official Benue State Government account.",
+          "importance": "Official communications on security and governance in Benue State.",
+          "region_coverage": ["Benue"],
+          "topics": ["State security updates", "Farmer-herder conflict"]
+        }
+      ]
+    },
+    {
+      "category": "MILITARY & POLICE OFFICIAL ACCOUNTS",
+      "description": "Official Nigerian military, police, and security agency accounts",
+      "accounts": [
+        {
+          "handle": "@DHQNigeria",
+          "name": "Defence HQ Nigeria",
+          "description": "Official X Handle of the Armed Forces of Nigeria / Defence Headquarters.",
+          "importance": "Primary official source for joint military operations, Theatre Command updates, and defense policy. Posts operational summaries and official casualty figures.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Joint military operations", "Official defense updates", "Operational summaries"]
+        },
+        {
+          "handle": "@DefenceInfoNG",
+          "name": "Defence Information Nigeria",
+          "description": "Defence Headquarters information/spokesperson account. Director of Defence Information oversees this.",
+          "importance": "Official spokesperson channel for DHQ. Posts press releases, operational updates, and responds to security incidents.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Official military press releases", "Operational updates", "DHQ communications"]
+        },
+        {
+          "handle": "@HQNigerianArmy",
+          "name": "Nigerian Army",
+          "description": "Official Twitter Account of the Nigerian Army.",
+          "importance": "Official source for army operations, troop deployments, and ground operation results. Key for tracking counter-insurgency and anti-banditry operations.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Army operations", "Counter-insurgency", "Anti-banditry", "Troop deployments"]
+        },
+        {
+          "handle": "@NigAirForce",
+          "name": "Nigerian Air Force",
+          "description": "Official Twitter page of the Nigerian Air Force. 387K+ followers.",
+          "importance": "Essential for tracking airstrikes, air operations in northeast/northwest, and air support to ground troops. Posts about aircraft deployments and operational results.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Airstrikes", "Air operations", "Close air support", "Aircraft deployments"]
+        },
+        {
+          "handle": "@NigerianNavy",
+          "name": "Nigerian Navy",
+          "description": "Official Twitter account of the Nigerian Navy. 297K+ followers.",
+          "importance": "Covers maritime security, Niger Delta operations, and riverine operations relevant to Lake Chad security.",
+          "region_coverage": ["Maritime", "Niger Delta", "Lake Chad"],
+          "topics": ["Maritime security", "Niger Delta operations", "Riverine operations"]
+        },
+        {
+          "handle": "@PoliceNG",
+          "name": "Nigeria Police Force",
+          "description": "Official Twitter handle of the Nigeria Police Force.",
+          "importance": "Official police communications on security incidents, arrests, and law enforcement operations. Publishes crime statistics and operational updates.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Law enforcement", "Crime reporting", "Arrests", "Security incidents"]
+        },
+        {
+          "handle": "@BenHundeyin",
+          "name": "ACP Benjamin Hundeyin",
+          "description": "Former Force Public Relations Officer (replaced March 2026). Previously Lagos State Police PRO. 247K+ followers. Won 'Force of Twitter' award.",
+          "importance": "Even after leaving the FPRO role, remains highly influential on security discussions on Twitter. Known for engaging directly with the public on security matters. Extremely active and responsive.",
+          "region_coverage": ["Nationwide", "Lagos"],
+          "topics": ["Police operations", "Public engagement", "Security commentary"]
+        },
+        {
+          "handle": "@official_NSCDC",
+          "name": "Nigerian Security & Civil Defence Corps",
+          "description": "Official NSCDC account.",
+          "importance": "NSCDC handles pipeline security, critical infrastructure protection, and civil defense. Relevant for tracking attacks on infrastructure.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Critical infrastructure", "Pipeline security", "Civil defense"]
+        },
+        {
+          "handle": "@nemanigeria",
+          "name": "NEMA Nigeria (National Emergency Management Agency)",
+          "description": "Official account of NEMA. Manages disaster response across Nigeria.",
+          "importance": "Posts about emergency responses to attacks, flooding, and displacement. First official source for casualty figures and humanitarian response to security incidents.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Emergency response", "Disaster management", "IDP figures", "Humanitarian coordination"]
+        }
+      ]
+    },
+    {
+      "category": "INTERNATIONAL CONFLICT TRACKERS & ORGANIZATIONS",
+      "description": "International organizations that monitor and analyze Nigerian conflict",
+      "accounts": [
+        {
+          "handle": "@ACLEDINFO",
+          "name": "ACLED (Armed Conflict Location & Event Data)",
+          "description": "Independent, impartial conflict monitor providing real-time data and analysis on violent conflict globally. Detailed methodology for coding BH/ISWAP factions.",
+          "importance": "Gold standard for conflict data. Tracks every violent event in Nigeria with geolocation. Their Nigeria data underpins most academic and policy analysis. Essential for trend analysis and violence mapping.",
+          "region_coverage": ["Global", "Nigeria"],
+          "topics": ["Conflict data", "Violence mapping", "Trend analysis", "ISWAP/BH coding"]
+        },
+        {
+          "handle": "@CrisisGroup",
+          "name": "International Crisis Group",
+          "description": "Independent, non-profit, non-governmental organisation committed to preventing and resolving deadly conflict.",
+          "importance": "Publishes major policy reports on Nigeria's insurgency, banditry, and farmer-herder conflict. Their Nigeria coverage (via Nnamdi Obasi and others) influences international policy. Reports on BH/ISWAP factional dynamics are essential reading.",
+          "region_coverage": ["Global", "Nigeria", "Lake Chad Basin"],
+          "topics": ["Policy analysis", "Insurgency", "Banditry", "Farmer-herder conflict", "Lake Chad Basin"]
+        },
+        {
+          "handle": "@issafrica",
+          "name": "Institute for Security Studies (ISS Africa)",
+          "description": "Africa's largest independent security research institute. HQ in Pretoria with regional offices.",
+          "importance": "Extensive research on Lake Chad Basin security, ISWAP military tactics, and MNJTF effectiveness. Their analyses of ISWAP attacks on military bases and JAS resurgence are essential.",
+          "region_coverage": ["Pan-African", "Lake Chad Basin", "Nigeria"],
+          "topics": ["Lake Chad security", "ISWAP analysis", "MNJTF", "Regional security"]
+        },
+        {
+          "handle": "@AfricaACSS",
+          "name": "Africa Center for Strategic Studies",
+          "description": "U.S. Department of Defense institution for academic programs, research, and strategic dialogue on African security.",
+          "importance": "Produces detailed security threat maps and analysis for Nigeria. Their 'Nigeria's Diverse Security Threats' briefing is widely referenced. Tracks militant Islamist group activity across Africa.",
+          "region_coverage": ["Pan-African", "Nigeria"],
+          "topics": ["Strategic analysis", "Militant Islamist groups", "Security mapping", "Defense policy"]
+        },
+        {
+          "handle": "@hrw",
+          "name": "Human Rights Watch",
+          "description": "Global human rights organization. Active Nigeria research team led by Mausi Segun.",
+          "importance": "Documents security force abuses, civilian targeting by insurgents, IDP rights violations, and airstrikes on civilians. Their Nigeria reports shape international pressure on security accountability.",
+          "region_coverage": ["Global", "Nigeria"],
+          "topics": ["Human rights violations", "Security force abuses", "Civilian protection", "IDP rights", "Airstrike accountability"]
+        },
+        {
+          "handle": "@AmnestyNigeria",
+          "name": "Amnesty International Nigeria",
+          "description": "Nigerian chapter of Amnesty International.",
+          "importance": "Documents human rights violations in conflict zones, tracks killings by bandits and security forces, and publishes urgent casualty reports from attacks. Often provides casualty figures for major incidents.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Human rights", "Civilian casualties", "Security force abuses", "Conflict documentation"]
+        },
+        {
+          "handle": "@OCHANigeria",
+          "name": "UNOCHA Nigeria",
+          "description": "UN Office for the Coordination of Humanitarian Affairs in Nigeria.",
+          "importance": "Coordinates humanitarian response in northeast Nigeria. Publishes situation reports, IDP figures, and humanitarian access updates. Essential for understanding displacement and humanitarian impact of security events.",
+          "region_coverage": ["Northeast Nigeria"],
+          "topics": ["Humanitarian coordination", "IDP figures", "Humanitarian access", "Situation reports"]
+        },
+        {
+          "handle": "@unhcrnigeria",
+          "name": "UNHCR Nigeria",
+          "description": "UN Refugee Agency operations in Nigeria.",
+          "importance": "Tracks displacement, refugee movements, and protection needs in conflict-affected areas. Data on IDPs and cross-border displacement.",
+          "region_coverage": ["Nationwide", "Cross-border"],
+          "topics": ["Displacement", "Refugee protection", "IDP tracking", "Cross-border movement"]
+        },
+        {
+          "handle": "@ICRC_Nigeria",
+          "name": "ICRC in Nigeria",
+          "description": "International Committee of the Red Cross operations in Nigeria.",
+          "importance": "Active in northeast, north-central, and south-south Nigeria. Provides humanitarian updates, access reports, and documentation of conflict impact on civilians.",
+          "region_coverage": ["Northeast", "North-Central", "South-South"],
+          "topics": ["Humanitarian operations", "Conflict impact", "Civilian protection", "Missing persons"]
+        }
+      ]
+    },
+    {
+      "category": "PROMINENT NIGERIAN SECURITY ANALYSTS",
+      "description": "Analysts and researchers who provide expert commentary on Nigerian security",
+      "accounts": [
+        {
+          "handle": "@bulamabukarti",
+          "name": "Dr. Audu Bulama Bukarti",
+          "description": "VP at Bridgeway Foundation (DDR/Deradicalization). Senior Non-Resident Associate at CSIS. Former Tony Blair Institute extremism analyst. PhD researcher on Boko Haram at SOAS. Columnist for Daily Trust.",
+          "importance": "Nigeria's foremost security analyst on violent extremism. Writes for Foreign Policy, CNN, Washington Post. Provides deep analysis on BH/ISWAP strategy, ideology, and Nigerian government counterinsurgency approach. Hugely influential in policy circles.",
+          "region_coverage": ["Northeast Nigeria", "Lake Chad Basin", "Sahel"],
+          "topics": ["Violent extremism", "Boko Haram strategy", "ISWAP ideology", "Counter-insurgency policy", "Deradicalization"]
+        },
+        {
+          "handle": "@Chxta",
+          "name": "Cheta Nwanze",
+          "description": "CEO of SBM Intelligence. MA in Strategy and International Security (University of Hull). Former Managing Editor of Daily Times Nigeria. Writes for The Guardian UK, Al Jazeera, Premium Times.",
+          "importance": "Provides big-picture analysis of Nigeria's security crisis, connecting insurgency, banditry, and state failure. His writing on the 'profitable business of insecurity' and state legitimacy crisis is essential reading.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Strategic analysis", "State failure", "Insecurity economics", "Political risk", "Geopolitics"]
+        },
+        {
+          "handle": "@kbadtweet",
+          "name": "Dr. Kabir Adamu",
+          "description": "Founder/CEO of Beacon Security and Intelligence Limited (BSIL), Abuja. PhD in Security Risk Management. Specialist in enterprise security and national security strategy for Nigeria, Sahel, West Africa.",
+          "importance": "Regularly quoted in AFP, Al Jazeera, and Nigerian media on security developments. Provides operational-level security risk analysis and practical security advisories.",
+          "region_coverage": ["Nationwide", "Sahel", "West Africa"],
+          "topics": ["Security risk management", "National security strategy", "Practical security advisories"]
+        },
+        {
+          "handle": "@HassanIdayat",
+          "name": "Idayat Hassan",
+          "description": "Director of Centre for Democracy and Development (CDD West Africa). Based in Abuja. Yale World Fellow. Involved with Operation Safe Corridor from inception.",
+          "importance": "Leading voice on the intersection of democracy, governance, and security in Nigeria. Provided foundational ideas for Operation Safe Corridor (BH deradicalization). CDD has office in Maiduguri for direct northeast coverage.",
+          "region_coverage": ["West Africa", "Nigeria"],
+          "topics": ["Democracy and security", "Deradicalization", "Governance", "Security policy"]
+        },
+        {
+          "handle": "@MausiSegun",
+          "name": "Mausi Segun",
+          "description": "Executive Director of HRW's Africa Division. Former senior researcher for Nigeria at HRW. Law degree from Obafemi Awolowo University, Masters in Human Rights Law from SOAS.",
+          "importance": "Conducted field investigations across northern Nigeria on cycles of violence, Chibok abductions, and security force abuses. Authored landmark HRW reports on BH insurgency and military response. Writes for NYT, Independent, Washington Post.",
+          "region_coverage": ["Northern Nigeria", "Pan-African"],
+          "topics": ["Human rights", "Security force accountability", "Civilian protection", "Insurgency impact"]
+        }
+      ]
+    },
+    {
+      "category": "INTERNATIONAL RESEARCH & ACADEMIC ANALYSTS",
+      "description": "International researchers and think tank analysts covering Nigerian security",
+      "accounts": [
+        {
+          "handle": "@JamestownTweets",
+          "name": "Jamestown Foundation",
+          "description": "Washington D.C. defense policy think tank. Publishes Terrorism Monitor. Jacob Zenn serves as editor and senior fellow on African affairs.",
+          "importance": "Their Terrorism Monitor is one of the most authoritative publications tracking ISWAP and Boko Haram. Jacob Zenn's analysis of insurgent tactics, especially ISWAP's 'lightning assault' strategy, is essential reading for understanding operational dynamics.",
+          "region_coverage": ["Global", "Lake Chad Basin", "Sahel"],
+          "topics": ["Terrorism analysis", "ISWAP tactics", "Boko Haram strategy", "Jihadist movements"]
+        },
+        {
+          "handle": "@cddwestafrica",
+          "name": "Centre for Democracy and Development (CDD)",
+          "description": "Abuja-based policy research organization. Offices in Lagos, Abuja, Maiduguri, and London.",
+          "importance": "Has a Maiduguri office providing direct northeast coverage. Research on democratization, security, and governance. Ranked 16th out of 94 sub-Saharan Africa think tanks.",
+          "region_coverage": ["West Africa", "Nigeria", "Northeast"],
+          "topics": ["Democracy and security", "Governance research", "Northeast Nigeria", "Peace and security"]
+        }
+      ]
+    },
+    {
+      "category": "LOCAL JOURNALISTS IN CONFLICT ZONES",
+      "description": "Journalists based in or covering specific conflict-affected areas",
+      "accounts": [
+        {
+          "handle": "@OjyOkpe",
+          "name": "Ojy Okpe",
+          "description": "Arise News Channel Anchor. Hosts 'What's Trending with Ojy Okpe' and co-anchors the Good Morning Show. Based in Lagos.",
+          "importance": "Prominent TV anchor who covers security and trending issues. Amplifies security news to large audience through Arise platform.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Security news amplification", "News analysis", "Trending security issues"]
+        },
+        {
+          "handle": "@MaupeO",
+          "name": "Maupe Ogun-Yusuf",
+          "description": "Co-Host of Sunrise Daily and host of Hard Copy on Channels TV. Named among most powerful women in journalism.",
+          "importance": "Through Channels TV's Sunrise Daily, covers security topics and interviews key security officials and analysts. Hard Copy program does investigative pieces including security topics.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Security interviews", "Investigative reporting", "Security analysis"]
+        },
+        {
+          "handle": "@DavidHundeyin",
+          "name": "David Hundeyin",
+          "description": "Award-winning investigative journalist. West and Central Africa focus. Freelances for multiple outlets.",
+          "importance": "Investigative journalist who has uncovered security-related corruption and government failures. Active voice on security accountability and press freedom.",
+          "region_coverage": ["West Africa", "Nigeria"],
+          "topics": ["Investigative journalism", "Security corruption", "Government accountability"]
+        },
+        {
+          "handle": "@SeyitanAtigarin",
+          "name": "Oluwaseyitan Atigarin",
+          "description": "Entertainment correspondent and reporter at Arise News.",
+          "importance": "Reports on current affairs including security-related breaking news through Arise News platform.",
+          "region_coverage": ["Nationwide"],
+          "topics": ["Breaking news", "Current affairs"]
+        }
+      ]
+    }
+  ],
+  "notes": {
+    "usage_guidance": "This watchlist is organized by category for monitoring Nigerian security events. Priority accounts for real-time attack/incident monitoring are: @ZagazOlaMakama (northeast), @A_Salkida (northeast), @eonsintelligenc (nationwide), @HumAngle_ (nationwide), @daily_trust (north), @SaharaReporters (nationwide), @prnigeria (official military), @DHQNigeria (official), @DefenceInfoNG (official), @sbmintelligence (analysis).",
+    "monitoring_priorities": {
+      "northeast_insurgency": ["@ZagazOlaMakama", "@A_Salkida", "@HumAngle_", "@fulannasrullah", "@GovBorno", "@GovernorZulum", "@yobegovernor", "@daily_trust"],
+      "northwest_banditry": ["@Abdulfagge", "@eonsintelligenc", "@daily_trust", "@daudalawal_", "@dikko_radda", "@ubasanius", "@Ahmedaliyuskt", "@SaharaReporters"],
+      "middle_belt_violence": ["@HyacinthAlia", "@benuestategovt", "@HumAngle_", "@daily_trust", "@ACLEDINFO"],
+      "military_operations": ["@DHQNigeria", "@DefenceInfoNG", "@HQNigerianArmy", "@NigAirForce", "@prnigeria", "@DefenseNigeria"],
+      "strategic_analysis": ["@bulamabukarti", "@Chxta", "@sbmintelligence", "@kbadtweet", "@CrisisGroup", "@ACLEDINFO", "@issafrica"],
+      "humanitarian_impact": ["@OCHANigeria", "@unhcrnigeria", "@ICRC_Nigeria", "@nemanigeria", "@hrw", "@AmnestyNigeria"]
+    },
+    "handle_verification_note": "All handles were verified through web searches as of March 2026. Twitter/X handles can change. Verify handles are still active before adding to automated monitoring systems.",
+    "data_sources_consulted": [
+      "Twitter/X direct profile pages",
+      "Muck Rack journalist profiles",
+      "Organization official websites",
+      "CPJ (Committee to Protect Journalists)",
+      "Reuters Institute for the Study of Journalism",
+      "Think tank staff directories (CSIS, Hudson, ICG, TBI, Jamestown)",
+      "Nigerian state government websites",
+      "Armed Forces of Nigeria official sites"
+    ]
+  }
+}

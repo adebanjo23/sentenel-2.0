@@ -12,11 +12,10 @@ venv/
 !.env.example
 secrets.json
 
-# Data (persistent, not in repo)
+# Data — heavy files only (keep watchlist and cookies)
 data/*.db
 data/videos/
 data/logs/
-data/twitter/cookies/
 data/twitter/debug_graphql_response.json
 data/twitter/*.png
 
