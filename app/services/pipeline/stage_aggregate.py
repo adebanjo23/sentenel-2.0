@@ -25,21 +25,24 @@ NIGERIAN_STATES = [
 
 async def compute_state_metrics(
     db: AsyncSession, state: str, window_hours: int, baseline_days: int,
+    cutoff: datetime | None = None,
 ) -> dict:
-    """Compute security metrics for a single state."""
-    now = datetime.utcnow()
+    """Compute security metrics for a single state. Uses cutoff instead of now if provided."""
+    now = cutoff or datetime.utcnow()
     window_start = now - timedelta(hours=window_hours)
     baseline_start = now - timedelta(days=baseline_days)
 
     # Current window: classified tweets for this state
-    result = await db.execute(
+    query = (
         select(TwitterPost)
         .where(
             TwitterPost.ai_state == state,
             TwitterPost.ai_classified_at.isnot(None),
             TwitterPost.posted_at >= window_start,
+            TwitterPost.posted_at <= now,
         )
     )
+    result = await db.execute(query)
     window_tweets = result.scalars().all()
 
     # Baseline: classified tweets for this state in the longer period (excluding current window)

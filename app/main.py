@@ -8,6 +8,7 @@ from app.config import get_settings
 from app.database import init_db
 from app.routes import health, acled, firms, tiktok, twitter, monitor, events, pipeline, threats, alerts
 from app.routes import scheduler as scheduler_route
+from app.routes import replay
 
 
 @asynccontextmanager
@@ -70,3 +71,6 @@ app.include_router(alerts.router, prefix="/api/alerts", tags=["alerts"])
 
 # Scheduler
 app.include_router(scheduler_route.router, prefix="/api/scheduler", tags=["scheduler"])
+
+# Historical Replay
+app.include_router(replay.router, prefix="/api/replay", tags=["replay"])

@@ -47,21 +47,25 @@ Threat level guidance:
 
 
 async def assess_state(
-    db: AsyncSession, settings: Settings, state: str, stl: StateThreatLevel, run_id: int,
-) -> ThreatAssessment | None:
-    """Produce a threat assessment for one state."""
-    window_start = datetime.utcnow() - timedelta(hours=settings.pipeline_aggregate_window_hours)
+    db: AsyncSession, settings: Settings, state: str, stl, run_id: int,
+    cutoff: datetime | None = None, persist: bool = True,
+) -> ThreatAssessment | dict | None:
+    """Produce a threat assessment for one state. When persist=False, returns dict without saving."""
+    now = cutoff or datetime.utcnow()
+    window_start = now - timedelta(hours=settings.pipeline_aggregate_window_hours)
 
     # Get classified tweets for this state
-    result = await db.execute(
+    query = (
         select(TwitterPost)
         .where(
             TwitterPost.ai_state == state,
             TwitterPost.ai_classified_at.isnot(None),
             TwitterPost.posted_at >= window_start,
+            TwitterPost.posted_at <= now,
         )
         .order_by(TwitterPost.posted_at.asc())
     )
+    result = await db.execute(query)
     tweets = result.scalars().all()
 
     if not tweets:
@@ -81,7 +85,8 @@ async def assess_state(
             date_str = t.posted_at.strftime("%b %d %H:%M") if t.posted_at else "?"
             categorized_text += f"- [{date_str}] @{t.author_handle or '?'}: {(t.content or '')[:250]}\n"
 
-    repeat_lgas_str = ", ".join(stl.repeat_lgas) if stl.repeat_lgas else "None"
+    repeat_lgas = stl.repeat_lgas if stl.repeat_lgas else []
+    repeat_lgas_str = ", ".join(repeat_lgas) if repeat_lgas else "None"
 
     prompt = ASSESSMENT_PROMPT.format(
         state=state,
@@ -97,13 +102,23 @@ async def assess_state(
         fatalities=stl.fatalities_window,
     )
 
+    # Temporal context for replay mode
+    system_message = "You are a security intelligence analyst. Respond with valid JSON only. No markdown, no code blocks."
+    if cutoff is not None:
+        cutoff_str = cutoff.strftime("%B %d, %Y at %H:%M UTC")
+        system_message = (
+            f"You are a security intelligence analyst producing a threat assessment "
+            f"as of {cutoff_str}. Only consider information available up to this date. "
+            f"Respond with valid JSON only. No markdown, no code blocks."
+        )
+
     client = AsyncOpenAI(api_key=settings.openai_api_key)
 
     try:
         response = await client.chat.completions.create(
             model=settings.pipeline_model_full,
             messages=[
-                {"role": "system", "content": "You are a security intelligence analyst. Respond with valid JSON only. No markdown, no code blocks."},
+                {"role": "system", "content": system_message},
                 {"role": "user", "content": prompt},
             ],
             temperature=0.2,
@@ -116,7 +131,23 @@ async def assess_state(
 
         result = json.loads(raw)
 
-        # Get related event IDs
+        if not persist:
+            # Replay mode — return dict without saving to DB
+            logger.info(f"  [REPLAY] {state}: {result.get('threat_level', '?')} — {(result.get('narrative_summary') or '')[:100]}...")
+            return {
+                "state": state,
+                "threat_level": result.get("threat_level", "ELEVATED"),
+                "primary_threat_areas": result.get("primary_threat_areas"),
+                "threat_timeframe": result.get("threat_timeframe"),
+                "key_indicators": result.get("key_indicators"),
+                "specific_warnings": result.get("specific_warnings"),
+                "recommended_actions": result.get("recommended_actions"),
+                "narrative_summary": result.get("narrative_summary"),
+                "incident_count": stl.incident_count_window,
+                "tweets_analyzed": len(tweets),
+            }
+
+        # Live mode — persist to DB
         event_result = await db.execute(
             select(Event.id)
             .where(Event.admin1 == state, Event.status == "active")
@@ -144,7 +175,6 @@ async def assess_state(
         await db.commit()
         await db.refresh(assessment)
 
-        # Update the state threat level
         stl.threat_level = result.get("threat_level", stl.threat_level)
         stl.needs_assessment = False
         stl.last_assessment_id = assessment.id
