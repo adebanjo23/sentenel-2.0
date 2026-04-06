@@ -33,7 +33,7 @@ class ACLEDEvent(Base):
     # Actors
     actor1 = Column(Text)
     actor2 = Column(Text)
-    interaction = Column(Integer)
+    interaction = Column(Text)
 
     # Geographic
     country = Column(String(100), default="Nigeria")
