@@ -37,6 +37,9 @@ async def save_tweet(db: AsyncSession, tweet_data: dict, search_query: str | Non
         if created_at:
             try:
                 posted_at = datetime.strptime(created_at, "%a %b %d %H:%M:%S %z %Y")
+                # Strip timezone for PostgreSQL TIMESTAMP WITHOUT TIME ZONE
+                if posted_at.tzinfo is not None:
+                    posted_at = posted_at.replace(tzinfo=None)
             except (ValueError, TypeError):
                 pass
 
