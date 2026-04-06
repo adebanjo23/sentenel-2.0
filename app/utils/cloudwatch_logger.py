@@ -94,25 +94,17 @@ class CloudWatchLogger:
         self.logger = logging.getLogger("sentinel")
         self.logger.setLevel(logging.INFO)
 
-        formatter = logging.Formatter(
-            "%(asctime)s [%(name)s] %(levelname)s: %(message)s",
-            datefmt="%H:%M:%S",
-        )
-
-        if settings.cloudwatch_environment == "development":
-            console_handler = logging.StreamHandler()
-            console_handler.setFormatter(formatter)
-            self.logger.addHandler(console_handler)
-        else:
+        # Console output is handled by basicConfig on the root logger (propagate=True by default).
+        # Only add CloudWatch handler in production — no extra console handlers here.
+        if settings.cloudwatch_environment != "development":
+            formatter = logging.Formatter(
+                "%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+                datefmt="%H:%M:%S",
+            )
             cloudwatch_handler = CloudWatchHandler()
             cloudwatch_handler.setLevel(logging.INFO)
             cloudwatch_handler.setFormatter(formatter)
             self.logger.addHandler(cloudwatch_handler)
-
-            # Also keep console output in production (visible in docker logs)
-            console_handler = logging.StreamHandler()
-            console_handler.setFormatter(formatter)
-            self.logger.addHandler(console_handler)
 
     def get_logger(self):
         return self.logger

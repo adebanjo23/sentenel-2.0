@@ -12,7 +12,7 @@ from app.routes import scheduler as scheduler_route
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Configure logging — CloudWatch in production, console in development
+    # Configure root logging — console output for all loggers
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
@@ -21,10 +21,11 @@ async def lifespan(app: FastAPI):
 
     settings = get_settings()
 
-    # Initialize CloudWatch logger (sends to AWS in production, console in development)
+    # Initialize CloudWatch logger (adds CloudWatch handler in production, no-op in development)
+    # Only adds to the "sentinel" logger — basicConfig handles console for everything
     from app.utils.cloudwatch_logger import CloudWatchLogger
-    cw_logger = CloudWatchLogger().get_logger()
-    cw_logger.info(f"SENTINEL 2.0 starting — environment: {settings.cloudwatch_environment}")
+    CloudWatchLogger()
+    logging.getLogger("sentinel").info(f"SENTINEL 2.0 starting — environment: {settings.cloudwatch_environment}")
 
     await init_db(settings.database_url)
 
