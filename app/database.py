@@ -1,4 +1,4 @@
-"""SQLite-only async database setup."""
+"""Async database setup — supports both SQLite and PostgreSQL."""
 
 import logging
 from typing import AsyncGenerator
@@ -19,21 +19,36 @@ engine: AsyncEngine | None = None
 AsyncSessionLocal: async_sessionmaker[AsyncSession] | None = None
 
 
+def _is_sqlite(database_url: str) -> bool:
+    return "sqlite" in database_url
+
+
 def _create_engine(database_url: str) -> AsyncEngine:
-    return create_async_engine(
-        database_url,
-        echo=False,
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
-    )
+    if _is_sqlite(database_url):
+        return create_async_engine(
+            database_url,
+            echo=False,
+            connect_args={"check_same_thread": False},
+            poolclass=StaticPool,
+        )
+    else:
+        # PostgreSQL (asyncpg)
+        return create_async_engine(
+            database_url,
+            echo=False,
+            pool_size=10,
+            max_overflow=20,
+            pool_pre_ping=True,
+        )
 
 
 async def init_db(database_url: str = "sqlite+aiosqlite:///./data/sentinel.db"):
     """Create engine, session factory, and all tables."""
     global engine, AsyncSessionLocal
 
-    import os
-    os.makedirs("data", exist_ok=True)
+    if _is_sqlite(database_url):
+        import os
+        os.makedirs("data", exist_ok=True)
 
     engine = _create_engine(database_url)
     AsyncSessionLocal = async_sessionmaker(
@@ -46,7 +61,8 @@ async def init_db(database_url: str = "sqlite+aiosqlite:///./data/sentinel.db"):
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    logger.info(f"Database initialized: {database_url}")
+    db_type = "SQLite" if _is_sqlite(database_url) else "PostgreSQL"
+    logger.info(f"Database initialized: {db_type}")
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
