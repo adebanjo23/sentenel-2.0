@@ -59,7 +59,11 @@ jobs:
           --exclude '.venv' \
           --exclude '.env' \
           --exclude 'secrets.json' \
-          --exclude 'data/' \
+          --exclude 'data/*.db' \
+          --exclude 'data/videos/' \
+          --exclude 'data/logs/' \
+          --exclude 'data/twitter/debug_graphql_response.json' \
+          --exclude 'data/twitter/*.png' \
           --exclude 'node_modules' \
           --exclude '.next' \
           --exclude '.claude' \
