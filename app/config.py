@@ -67,9 +67,11 @@ class Settings(BaseSettings):
     pipeline_baseline_window_days: int = 30
     pipeline_threat_escalation_threshold: float = 2.0
     pipeline_min_incidents_for_assessment: int = 3
+    pipeline_strategic_window_days: int = 90
+    pipeline_strategic_min_tweets: int = 3
 
     # Scheduler
-    scheduler_enabled: bool = True
+    scheduler_enabled: bool = False
     scheduler_interval_hours: int = 8
     scheduler_tweets_per_account: int = 20
 

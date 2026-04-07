@@ -12,6 +12,7 @@ from app.models import PipelineRun
 from app.services.pipeline.stage_filter import run_filter
 from app.services.pipeline.stage_classify import run_classify
 from app.services.pipeline.stage_aggregate import run_aggregate
+from app.services.pipeline.stage_strategic import run_strategic
 from app.services.pipeline.stage_assess import run_assess
 from app.services.pipeline.stage_alert import run_alert
 
@@ -107,6 +108,14 @@ async def run_pipeline(settings: Settings, stages: list[int] | None = None) -> i
                 logger.info(f"Stage 3: {s3['states_flagged']}/{s3['states_analyzed']} states flagged")
             except Exception as e:
                 logger.error(f"Stage 3 failed: {e}")
+
+        # Stage 3B: Strategic Conditions (90-day)
+        if 3 in stages_to_run:
+            try:
+                s3b = await run_strategic(settings, run_id)
+                logger.info(f"Stage 3B: {s3b['states_assessed']} states strategically assessed")
+            except Exception as e:
+                logger.error(f"Stage 3B failed: {e}")
 
         # Stage 4: Assess
         if 4 in stages_to_run:

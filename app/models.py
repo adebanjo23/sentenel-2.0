@@ -334,6 +334,15 @@ class StateThreatLevel(Base):
     last_assessment_id = Column(Integer)
     last_assessment_at = Column(DateTime)
 
+    # Strategic layer (90-day conditions)
+    strategic_score = Column(Float, default=0.0)
+    strategic_level = Column(String(20), default="NORMAL")
+    strategic_conditions = Column(JSON)
+    strategic_assessed_at = Column(DateTime)
+
+    # Combined (max of tactical and strategic)
+    combined_level = Column(String(20), default="NORMAL")
+
     updated_at = Column(DateTime, default=datetime.utcnow)
 
     __table_args__ = (

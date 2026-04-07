@@ -15,6 +15,7 @@ from app.services.pipeline.stage_aggregate import (
     should_flag_for_assessment,
 )
 from app.services.pipeline.stage_assess import assess_state
+from app.services.pipeline.stage_strategic import evaluate_state_conditions, LEVEL_ORDER
 
 logger = logging.getLogger("sentinel.replay")
 
@@ -128,16 +129,33 @@ async def replay_snapshot(
         flagged = should_flag_for_assessment(metrics, threshold, min_incidents)
         threat_estimate = _estimate_threat_level(metrics, threshold, min_incidents)
 
+        # Compute strategic conditions (90-day window)
+        strategic = None
+        if settings.openai_api_key:
+            strategic = await evaluate_state_conditions(db, settings, state_name, cutoff=cutoff)
+
+        # Combined level = max(tactical, strategic)
+        tactical_order = LEVEL_ORDER.get(threat_estimate, 0)
+        strategic_order = LEVEL_ORDER.get(strategic["level"], 0) if strategic else 0
+        combined_order = max(tactical_order, strategic_order)
+        combined_level = {v: k for k, v in LEVEL_ORDER.items()}[combined_order]
+
         entry = {
             "state": state_name,
-            "threat_level": threat_estimate,
-            "flagged": flagged,
+            "threat_level": combined_level,
+            "tactical_level": threat_estimate,
+            "strategic_level": strategic["level"] if strategic else "NORMAL",
+            "strategic_score": strategic["score"] if strategic else 0.0,
+            "strategic_conditions": strategic["conditions"] if strategic else [],
+            "strategic_assessment": strategic["overall_assessment"] if strategic else None,
+            "risk_areas": strategic["risk_areas"] if strategic else [],
+            "flagged": flagged or (strategic_order >= LEVEL_ORDER["ELEVATED"] if strategic else False),
             "metrics": metrics,
             "assessment": None,
         }
 
-        # Run GPT-4 assessment if requested and state is flagged
-        if run_assessment and flagged and settings.openai_api_key:
+        # Run GPT-4 assessment if requested and state is flagged (by tactical or strategic)
+        if run_assessment and entry["flagged"] and settings.openai_api_key:
             stl_proxy = SimpleNamespace(
                 state=state_name,
                 threat_level="NORMAL",
