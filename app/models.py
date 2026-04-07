@@ -374,6 +374,19 @@ class ThreatAssessment(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
+class ReplayCache(Base):
+    """Cached replay results to avoid redundant AI calls."""
+    __tablename__ = "replay_cache"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    cache_key = Column(String(500), unique=True, nullable=False, index=True)
+    state = Column(String(100), index=True)
+    cutoff_date = Column(DateTime, nullable=False)
+    window_hours = Column(Integer)
+    result_json = Column(JSON, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
 class ThreatAlert(Base):
     """Generated when a state's threat level escalates."""
     __tablename__ = "threat_alerts"
