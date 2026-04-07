@@ -5,7 +5,6 @@ import logging
 from collections import defaultdict
 from datetime import datetime, timedelta
 
-from openai import AsyncOpenAI
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -112,22 +111,22 @@ async def assess_state(
             f"Respond with valid JSON only. No markdown, no code blocks."
         )
 
-    client = AsyncOpenAI(api_key=settings.openai_api_key)
+    from app.utils.llm_client import llm_chat
+
+    api_key = (
+        settings.anthropic_api_key
+        if settings.pipeline_assess_provider == "anthropic"
+        else settings.openai_api_key
+    )
 
     try:
-        response = await client.chat.completions.create(
-            model=settings.pipeline_model_full,
-            messages=[
-                {"role": "system", "content": system_message},
-                {"role": "user", "content": prompt},
-            ],
-            temperature=0.2,
+        raw = await llm_chat(
+            provider=settings.pipeline_assess_provider,
+            model=settings.pipeline_assess_model,
+            system_message=system_message,
+            user_message=prompt,
+            api_key=api_key,
         )
-        raw = response.choices[0].message.content.strip()
-        if raw.startswith("```"):
-            raw = raw.split("\n", 1)[1] if "\n" in raw else raw[3:]
-            if raw.endswith("```"):
-                raw = raw[:-3].strip()
 
         result = json.loads(raw)
 

@@ -4,7 +4,6 @@ import json
 import logging
 from datetime import datetime, timedelta
 
-from openai import AsyncOpenAI
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -171,22 +170,22 @@ async def evaluate_state_conditions(
         tweets=tweet_text,
     )
 
-    client = AsyncOpenAI(api_key=settings.openai_api_key)
+    from app.utils.llm_client import llm_chat
+
+    api_key = (
+        settings.anthropic_api_key
+        if settings.pipeline_strategic_provider == "anthropic"
+        else settings.openai_api_key
+    )
 
     try:
-        response = await client.chat.completions.create(
-            model=settings.pipeline_model_mini,
-            messages=[
-                {"role": "system", "content": "You are a security analyst. Respond with valid JSON only. No markdown, no code blocks."},
-                {"role": "user", "content": prompt},
-            ],
-            temperature=0.2,
+        raw = await llm_chat(
+            provider=settings.pipeline_strategic_provider,
+            model=settings.pipeline_strategic_model,
+            system_message="You are a security analyst. Respond with valid JSON only. No markdown, no code blocks.",
+            user_message=prompt,
+            api_key=api_key,
         )
-        raw = response.choices[0].message.content.strip()
-        if raw.startswith("```"):
-            raw = raw.split("\n", 1)[1] if "\n" in raw else raw[3:]
-            if raw.endswith("```"):
-                raw = raw[:-3].strip()
 
         result = json.loads(raw)
         conditions = result.get("conditions", [])

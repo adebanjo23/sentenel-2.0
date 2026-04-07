@@ -54,12 +54,24 @@ class Settings(BaseSettings):
     twitter_scroll_delay_min: float = 3.0
     twitter_scroll_delay_max: float = 6.0
 
-    # OpenAI (optional)
+    # OpenAI (for filter + classify stages)
     openai_api_key: str = Field(default="", alias="OPENAI_API_KEY")
+
+    # Anthropic (for deeper analysis — Stage 3B strategic + Stage 4 assessment)
+    anthropic_api_key: str = Field(default="", alias="ANTHROPIC_API_KEY")
 
     # Pipeline
     pipeline_model_mini: str = "gpt-4.1-mini"
     pipeline_model_full: str = "gpt-4.1"
+
+    # Stage 3B (strategic) and Stage 4 (assessment) provider config
+    # Switch between "openai" and "anthropic" — no code changes needed
+    # To use GPT-4.1: set provider=openai, model=gpt-4.1
+    # To use Claude:  set provider=anthropic, model=claude-opus-4-6
+    pipeline_assess_provider: str = Field(default="anthropic", alias="PIPELINE_ASSESS_PROVIDER")
+    pipeline_assess_model: str = Field(default="claude-opus-4-6", alias="PIPELINE_ASSESS_MODEL")
+    pipeline_strategic_provider: str = Field(default="anthropic", alias="PIPELINE_STRATEGIC_PROVIDER")
+    pipeline_strategic_model: str = Field(default="claude-opus-4-6", alias="PIPELINE_STRATEGIC_MODEL")
     pipeline_filter_batch_size: int = 50
     pipeline_classify_batch_size: int = 25
     pipeline_max_tweets_per_run: int = 5000
